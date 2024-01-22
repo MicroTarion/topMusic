@@ -8,20 +8,19 @@ block content
         .container
             form(action="/search" method="get")    
                 .mb-3        
-                    label.form-label(for="q") Nom de l'artiste
-                    input.form-control(type="search" name="q" id="q" value=q placeholder="Titre du film")
+                    label.form-label(for="q") Titre ou Artiste
+                    input.form-control(type="search" name="q" id="q" value=q placeholder="")
                 .mb-3 
                     button.btn.btn-secondary(type="submit") Chercher
 
         .container
             if musics 
-                ul#resultMovies 
+                p Musiques détectées
+                ul#resultMusic
                     each music in musics
-                        if music.poster_path
-                            li 
-                                a(href="/search/music/"+movie.tmdb_id)
-                                    img(src="https://image.tmdb.org/t/p/w500/"+movie.poster_path width="120")
-                                    div.content_tmdb
-                                        span.notation #{movie.vote_average}
-                                        span.title #{movie.title} 
-                                        span.release #{movie.release_date}
+                        li 
+                           
+                            span.notation #{music.artist.name}
+                            span.title #{music.title} 
+                           
+                            a(href=music.preview) Preview de #{music.title}

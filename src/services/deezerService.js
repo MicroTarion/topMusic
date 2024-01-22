@@ -1,9 +1,5 @@
 import fetch from 'node-fetch';
-
-
 import 'dotenv/config';
-
-
 import axios from 'axios';
 
   export async function search(keyword){
@@ -18,8 +14,8 @@ import axios from 'axios';
       };
       try {
         const response = await axios.request(options);
-        
-        return response.data;
+        console.log(response.data.data);
+        return response.data.data;
     } catch (error) {
         console.error(error);
     }

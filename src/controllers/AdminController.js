@@ -3,9 +3,8 @@ import {search, details, detailsMax} from "../services/deezerService.js";
 
 export function searchMusic(req, res) {
     if(req.query.q !== undefined && req.query.q != "") {
-        search(req.query.q).then(music => {  
-            console.log(req.query.q);
-            res.render('search', {q:req.query.q,  music })
+        search(req.query.q).then(musics => {  
+            res.render('search', {q:req.query.q,musics })
         });
     }
     else {
