@@ -1,0 +1,25 @@
+extends ../layout.pug
+
+block content
+    .container
+        h1 Inscription 
+        if error 
+            .alert.alert-danger #{error}
+        form(action='/register' method="post")
+            .input-group.mb-3
+                input(type="text" class="form-control" placeholder="Nom" name="lastname")
+
+            .input-group.mb-3
+                input(type="text" class="form-control" placeholder="Prénom" name="firstname")
+
+            .input-group.mb-3
+                input(type="email" class="form-control" placeholder="Email" name="email")     
+
+            .input-group.mb-3
+                input(type="password" class="form-control" placeholder="Mot de passe" name="password")
+
+            hr
+
+            .row.justify-content-center
+                .col-2
+                    button.btn.btn-primary(type="submit") Enregistrer

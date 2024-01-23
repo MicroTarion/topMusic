@@ -8,8 +8,8 @@ import axios from 'axios';
         url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
         params: {q: keyword},
         headers: {
-          'X-RapidAPI-Key': '647bc92398msh3c5a2a809b4827fp106f71jsn22d39ed2dbde',
-          'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
+            'X-RapidAPI-Key': process.env.RapidAPIKey,
+            'X-RapidAPI-Host': process.env.RapidAPIHost
         }
       };
       try {
@@ -24,32 +24,24 @@ import axios from 'axios';
 
 
 
-export function details(id) {
-    const url = `https://api.themoviedb.org/3/movie/${id}?language=fr-FR`;
+export async function detailsMusic(id) {
     const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${process.env.TMDB_TOKEN}`
-        }
+      method: 'GET',
+      url: 'https://deezerdevs-deezer.p.rapidapi.com/track/'+id,
+      headers: {
+        'X-RapidAPI-Key': process.env.RapidAPIKey,
+        'X-RapidAPI-Host': process.env.RapidAPIHost
+      }
     };
+    
+    try {
+        const response = await axios.request(options);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
 
-    return fetch(url, options)
-        .then(responseHttp => responseHttp.json())
-        .then((json) => { 
-            return {
-                tmdb_id: json.id, 
-                vote_average: json.vote_average, 
-                release_date: json.release_date,
-                title: json.title, 
-                poster_path: json.poster_path,
-                backdrop_path: json.backdrop_path,
-                genres: json.genres,
-                overview: json.overview,
-                tagline: json.tagline
-            } 
-        })
-        .catch(err => console.error('error:' + err));
 }
 export function detailsMax(id){
     const promises = [];

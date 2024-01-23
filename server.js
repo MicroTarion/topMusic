@@ -13,12 +13,18 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
 
-
+//--------------------------------------------------------------------
+//      Ajout du midlleware express session
+//--------------------------------------------------------------------
 const app = express();
 app.use(session({
     secret: process.env.APP_KEY, resave:false, saveUninitialized:false, 
     cookie: {maxAge: 3600000} 
 }));
+//--------------------------------------------------------------------
+//      Récupération des données en POST
+//--------------------------------------------------------------------
+app.use(express.urlencoded({extended: false}));
 
 app.use((req, res, next) => {
     if(process.env.APP_ENV === 'dev') {
@@ -33,7 +39,7 @@ app.use((req, res, next) => {
     res.locals.route = req._parsedUrl.pathname;
     res.locals.session = req.session;
     next();
-})
+})  
 //--------------------------------------------------------------------
 //      Ajout du midlleware express flash messages
 //--------------------------------------------------------------------

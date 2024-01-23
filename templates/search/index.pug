@@ -19,8 +19,7 @@ block content
                 ul#resultMusic
                     each music in musics
                         li 
-                           
-                            span.notation #{music.artist.name}
-                            span.title #{music.title} 
-                           
+                            a(href="/music/"+music.id) 
+                                span.notation #{music.artist.name}
+                                span.title #{music.title} 
                             a(href=music.preview) Preview de #{music.title}

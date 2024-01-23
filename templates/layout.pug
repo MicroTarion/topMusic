@@ -14,7 +14,19 @@ html(lang="fr")
                     ul.navbar-nav
                         li.nav-item
                             a.nav-link.active(aria-current="page" href="/") Accueil
-                    
+                        if username    
+                            li.nav-item
+                                a.nav-link.active(aria-current="page" href="/logout") Se déconnecter
+                            li.nav-item
+                                a.nav-link.active(aria-current="page" href="/profil") Profil    
+                            li.nav-item
+                                a.nav-link(href="/admin") Admin                 
+                        else
+                            li.nav-item
+                                    a.nav-link(href="/register") Inscription    
+                            li.nav-item
+                                a.nav-link.active(aria-current="page" href="/auth") Connexion
+                        li.nav-item.dropdown
                         li.nav-item
                             a.nav-link(href="/search") Search                 
                         li.nav-item.dropdown
@@ -25,7 +37,7 @@ html(lang="fr")
                                     a.dropdown-item(href="#" data-theme="light") Light
                                 li
                                     a.dropdown-item(href="#" data-theme="dark") Dark
-
+                    
         - var messages = getMessages()
         if messages.notify
             .container.mt-4

@@ -1,0 +1,27 @@
+extends ../layout.pug 
+block content
+
+    if music
+    
+        div
+            form(method="post")
+                button(type="submit") Enregistrer cette chanson
+    else 
+        h2 PAS DE Music
+    if artists 
+        p Artist 
+        each artist in artists 
+            li #{artist.name}
+              img(src="placeholder"+artist.profile_path width="100")
+             
+    else 
+        p PAS d'artiste
+    
+    .hideBeforeIntro
+        .container
+            form(action="/search" method="get")    
+                .mb-3        
+                    label.form-label(for="q") Titre ou Artiste
+                    input.form-control(type="search" name="q" id="q" value=q placeholder="")
+                .mb-3 
+                    button.btn.btn-secondary(type="submit") Chercher
