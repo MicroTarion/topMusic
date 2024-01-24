@@ -1,24 +1,31 @@
 import userRepo from '../repository/UserRepository.js'
+import bcrypt from 'bcryptjs';
 
     export function registerIndex (request, response) {
         response.render('register');
     }
 
-    export function registerProcess (request, response) {
-        let hashedPassword;
+    export async function registerProcess (request, response) {
         let user = new userRepo();
+        let hashedPassword=bcrypt
+        .genSalt(10)
+        .then(salt => {
+            return bcrypt.hashSync(request.body.password, salt)
+        }).then((hash) =>
+           user.password=hash
+        );
         user.firstname = request.body.firstname;
         user.lastname = request.body.lastname;
         user.email = request.body.email;
-        user.password = request.body.password;
+        await hashedPassword;
         console.log(user);
-        user.save()
+        user.save();
         request.flash('notify', `Votre compte a bien été créé !`)
         response.redirect('/');
     }
         
         // hashedPassword=bcrypt
-        // .genSalt(saltRounds)
+        // .genSalt(10)
         // .then(salt => {
         //     // console.log('Salt: ', salt)
         //     return bcrypt.hashSync(request.body.password, salt)

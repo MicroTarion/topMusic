@@ -14,21 +14,22 @@ html(lang="fr")
                     ul.navbar-nav
                         li.nav-item
                             a.nav-link.active(aria-current="page" href="/") Accueil
-                        if username    
+                        if email    
                             li.nav-item
                                 a.nav-link.active(aria-current="page" href="/logout") Se déconnecter
                             li.nav-item
                                 a.nav-link.active(aria-current="page" href="/profil") Profil    
                             li.nav-item
-                                a.nav-link(href="/admin") Admin                 
+                                a.nav-link(href="/admin") Admin      
+                            li.nav-item
+                                a.nav-link(href="/admin/search") Search            
                         else
                             li.nav-item
                                     a.nav-link(href="/register") Inscription    
                             li.nav-item
                                 a.nav-link.active(aria-current="page" href="/auth") Connexion
                         li.nav-item.dropdown
-                        li.nav-item
-                            a.nav-link(href="/search") Search                 
+                                        
                         li.nav-item.dropdown
                             a.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false")
                                 | Themes

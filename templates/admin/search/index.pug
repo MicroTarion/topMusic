@@ -1,0 +1,30 @@
+extends ../../layout.pug 
+
+
+
+block content
+
+    .hideBeforeIntro
+        .container
+            form(action="/admin/search" method="get")    
+                .mb-3        
+                    label.form-label(for="q") Titre ou Artiste
+                    input.form-control(type="search" name="q" id="q" value=q placeholder="")
+                .mb-3 
+                    button.btn.btn-secondary(type="submit") Chercher
+
+        .container
+            if musics 
+                p Musiques détectées
+                ul#resultMusic
+                    each music in musics
+                        li 
+                            img(src=music.album.cover_small)
+                            span #{music.artist.name}
+                            span #{music.title}
+                            span #{music.album.name}
+                            a(href=music.preview) Preview de #{music.title}
+                            form(method="post")
+                                button.btn.btn-secondary(type="submit") Enregistrer cette chanson
+                            form(method="get")
+                                a(href="/admin/music/"+music.id).btn.btn-secondary Plus de détails

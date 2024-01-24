@@ -7,8 +7,6 @@ import session from 'express-session';
 import flash from 'express-flash-messages';
 
 
-
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
@@ -37,9 +35,9 @@ app.use((req, res, next) => {
 //--------------------------------------------------------------------
 app.use((req, res, next) => {
     res.locals.route = req._parsedUrl.pathname;
-    res.locals.session = req.session;
     next();
 })  
+
 //--------------------------------------------------------------------
 //      Ajout du midlleware express flash messages
 //--------------------------------------------------------------------

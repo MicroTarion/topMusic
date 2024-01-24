@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { selectByUsername } from "../repository/User.js";
+import userRepo from '../repository/UserRepository.js'
 import jwt  from 'jsonwebtoken';
 import Cookies from "cookies";
 
@@ -9,16 +9,18 @@ export function get(req, res) {
     res.render('auth');
 }
 
-export function post(req, res) {
+export async function post(req, res) {
     let error;
-    selectByUsername(req.body.username).then((user) => {
+    const query = userRepo.where({ email: req.body.email });
+    query.findOne().then((user) => {
         if(user !== null) {
+            console.log("user non nul");
             if(bcrypt.compareSync(req.body.password, user.password)) {
-                let accessToken = jwt.sign({username: user.username, a2f: user.a2f}, process.env.SECRET_JWT, {expiresIn: 604800});                   
-                new Cookies(req,res).set('jwt', accessToken, {httpOnly: true, secure: (process.env.APP_ENV === 'production') });
+                 let accessToken = jwt.sign({email: user.email}, process.env.SECRET_JWT, {expiresIn: 604800});                   
+                 new Cookies(req,res).set('jwt', accessToken, {httpOnly: true, secure: (process.env.APP_ENV === 'production') });
 
                 req.flash('notify', 'Vous êtes maintenant connecté');
-                return res.redirect('/admin');
+                return res.redirect('/');
             } else {
                 error = `Echec d'identification.`
             }
@@ -29,7 +31,7 @@ export function post(req, res) {
     })
 }
 
-export function authControllerDeconnect(req, res) {
+export function disconnect(req, res) {
     new Cookies(req,res).set('jwt',"", {maxAge: Date.now()});
     req.flash('notify', 'Vous êtes maintenant déconnecté');
     return res.redirect('/');
